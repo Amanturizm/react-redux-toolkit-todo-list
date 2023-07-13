@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useAppDispatch, useAppSelector} from "../../app/hook";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { fetchTodoList, postTodo } from "../../container/TodoList/TodoListThunk";
 import ButtonSpinner from "../ButtonSpinner/ButtonSpinner";
 
@@ -30,7 +30,7 @@ const TodoListForm = () => {
         placeholder="todo..."
       />
       <button className="btn btn-primary d-flex align-items-center" disabled={addButtonLoading}>
-        {addButtonLoading ? <ButtonSpinner /> : null} Add
+        { addButtonLoading ? <ButtonSpinner /> : null } Add
       </button>
     </form>
   );

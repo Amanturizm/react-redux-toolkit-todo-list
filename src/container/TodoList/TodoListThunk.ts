@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosApi from "../../axiosApi";
 import { RootState } from "../../app/app";
+import axiosApi from "../../axiosApi";
 
 export const fetchTodoList = createAsyncThunk<ITodoListItem[]>(
   'todo-list/fetch',

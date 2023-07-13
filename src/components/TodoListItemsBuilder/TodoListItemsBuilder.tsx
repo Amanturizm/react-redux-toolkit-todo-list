@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from "../../app/hook";
+import { addCurrentTodoId } from "../../container/TodoList/TodoListSlice";
 import { changeStatus, deleteTodo, fetchTodoList } from "../../container/TodoList/TodoListThunk";
 import TodoListItem from "../TodoListItem/TodoListItem";
 import Preloader from "../Preloader/Preloader";
-import {addCurrentTodoId} from "../../container/TodoList/TodoListSlice";
 
 const TodoListItemsBuilder = () => {
   const dispatch = useAppDispatch();
