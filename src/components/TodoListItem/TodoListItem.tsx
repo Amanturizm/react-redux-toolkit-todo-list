@@ -3,9 +3,10 @@ import React from 'react';
 interface Props {
   todo: ITodoListItem;
   onChecked: React.ChangeEventHandler;
+  onDelete: React.MouseEventHandler;
 }
 
-const TodoListItem: React.FC<Props> = ({ todo, onChecked }) => {
+const TodoListItem: React.FC<Props> = ({ todo, onChecked, onDelete }) => {
   return (
     <div className="d-flex align-items-center justify-content-between border border-2 border-secondary rounded-3 py-2 px-3 fs-4">
       <div className="d-flex gap-3">
@@ -18,7 +19,7 @@ const TodoListItem: React.FC<Props> = ({ todo, onChecked }) => {
         />
         <h3>{todo.title}</h3>
       </div>
-      <button className="btn btn-outline-danger">del</button>
+      <button onClick={onDelete} className="btn btn-outline-danger">del</button>
     </div>
   );
 };

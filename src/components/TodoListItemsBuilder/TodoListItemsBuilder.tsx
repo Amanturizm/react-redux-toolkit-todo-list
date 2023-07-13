@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import {changeStatus, fetchTodoList} from "../../container/TodoList/TodoListThunk";
+import {changeStatus, deleteTodo, fetchTodoList} from "../../container/TodoList/TodoListThunk";
 import TodoListItem from "../TodoListItem/TodoListItem";
 
 const TodoListItemsBuilder = () => {
@@ -11,8 +11,13 @@ const TodoListItemsBuilder = () => {
     dispatch(fetchTodoList());
   }, [dispatch]);
 
-  const changeStatusDispatch = async (todo: ITodoListItem, index: number) => {
-    await dispatch(changeStatus({ id: todo.id || '', index }));
+  const changeStatusDispatch = async (id: string, index: number) => {
+    await dispatch(changeStatus({ id, index }));
+    await dispatch(fetchTodoList());
+  };
+
+  const deleteDispatch = async (id: string) => {
+    await dispatch(deleteTodo({ id }));
     await dispatch(fetchTodoList());
   };
 
@@ -22,7 +27,8 @@ const TodoListItemsBuilder = () => {
         todoList.map((todo, index) => (
           <TodoListItem
             todo={todo}
-            onChecked={() => changeStatusDispatch(todo, index)}
+            onChecked={() => changeStatusDispatch(todo.id || '', index)}
+            onDelete={() => deleteDispatch(todo.id || '')}
             key={`todo-${todo.id}`}
           />
         ))

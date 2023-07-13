@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import { useAppDispatch } from "../../app/hook";
-import { fetchTodoList } from "../../container/TodoList/TodoListThunk";
-import axiosApi from "../../axiosApi";
+import { fetchTodoList, postTodo } from "../../container/TodoList/TodoListThunk";
 
 const TodoListForm = () => {
   const dispatch = useAppDispatch();
 
   const [todoValue, setTodoValue] = useState<string>('');
 
-  const postTodo = async (e: React.FormEvent) => {
+  const sendNewTodo = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      await axiosApi.post('/todo-list.json', { title: todoValue, status: false });
+    if (todoValue.length > 1) {
+      await dispatch(postTodo({ newTodo: { title: todoValue, status: false } }));
       await dispatch(fetchTodoList());
-    } catch (e) {
-      console.error(e);
+      setTodoValue('');
+    } else {
+      alert('Введите задачу!');
     }
-  };
+  }
 
   return (
-    <form onSubmit={postTodo} className="d-flex gap-4 ">
+    <form onSubmit={sendNewTodo} className="d-flex gap-4 ">
       <input
         type="text"
         value={todoValue}
