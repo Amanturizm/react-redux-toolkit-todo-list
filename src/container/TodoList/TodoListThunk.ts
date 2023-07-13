@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
 import { RootState } from "../../app/app";
 
-export const fetchTodoList = createAsyncThunk(
+export const fetchTodoList = createAsyncThunk<ITodoListItem[]>(
   'todo-list/fetch',
   async () => {
     const { data: todoList } = await axiosApi<ITodoListApi>('/todo-list.json');

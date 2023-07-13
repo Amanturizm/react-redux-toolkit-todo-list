@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from "../../app/hook";
+import {useAppDispatch, useAppSelector} from "../../app/hook";
 import { fetchTodoList, postTodo } from "../../container/TodoList/TodoListThunk";
+import ButtonSpinner from "../ButtonSpinner/ButtonSpinner";
 
 const TodoListForm = () => {
   const dispatch = useAppDispatch();
+  const { addButtonLoading } = useAppSelector((state) => state.todoList);
 
   const [todoValue, setTodoValue] = useState<string>('');
 
@@ -11,8 +13,8 @@ const TodoListForm = () => {
     e.preventDefault();
     if (todoValue.length > 1) {
       await dispatch(postTodo({ newTodo: { title: todoValue, status: false } }));
-      await dispatch(fetchTodoList());
       setTodoValue('');
+      await dispatch(fetchTodoList());
     } else {
       alert('Введите задачу!');
     }
@@ -27,7 +29,9 @@ const TodoListForm = () => {
         className="form-control"
         placeholder="todo..."
       />
-      <button className="btn btn-primary">add</button>
+      <button className="btn btn-primary d-flex align-items-center" disabled={addButtonLoading}>
+        {addButtonLoading ? <ButtonSpinner /> : null} Add
+      </button>
     </form>
   );
 };
