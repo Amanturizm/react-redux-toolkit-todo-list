@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
+import { useAppDispatch, useAppSelector } from "../../app/hook";
+import {changeStatus, fetchTodoList} from "../../container/TodoList/TodoListThunk";
 import TodoListItem from "../TodoListItem/TodoListItem";
-import {useAppDispatch, useAppSelector} from "../../app/hook";
-import {fetchTodoList} from "../../container/TodoList/TodoListThunk";
 
 const TodoListItemsBuilder = () => {
   const dispatch = useAppDispatch();
@@ -11,11 +11,20 @@ const TodoListItemsBuilder = () => {
     dispatch(fetchTodoList());
   }, [dispatch]);
 
+  const changeStatusDispatch = async (todo: ITodoListItem, index: number) => {
+    await dispatch(changeStatus({ id: todo.id || '', index }));
+    await dispatch(fetchTodoList());
+  };
+
   return (
-    <div className="w-25 mx-auto mt-5">
+    <div className="d-flex flex-column gap-2">
       {
-        todoList.map(todo => (
-          <TodoListItem todo={todo} key={`todo-${todo.id}`} />
+        todoList.map((todo, index) => (
+          <TodoListItem
+            todo={todo}
+            onChecked={() => changeStatusDispatch(todo, index)}
+            key={`todo-${todo.id}`}
+          />
         ))
       }
     </div>
